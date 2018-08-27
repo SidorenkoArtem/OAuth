@@ -1,7 +1,7 @@
 package com.prototype.demo.model.dao;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Data

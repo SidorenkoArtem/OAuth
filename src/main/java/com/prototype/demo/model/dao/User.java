@@ -1,5 +1,6 @@
 package com.prototype.demo.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     private Long id;
 
-    private String name;
+    @JsonIgnore
+    private String username;
 
     private String phone;
 
