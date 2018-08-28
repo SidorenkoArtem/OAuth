@@ -7,6 +7,8 @@ import com.prototype.demo.model.responses.UserResponse;
 import com.prototype.demo.repositories.UsersRepository;
 import com.prototype.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Service(value = "userService")
+@Service()
 public class UserServiceImpl implements UserService {
 
     @Autowired

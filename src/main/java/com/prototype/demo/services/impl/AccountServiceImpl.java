@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountResponse getAccountByPhoneNumber(final String phoneNumber) {
         final AccountResponse accountResponse = new AccountResponse();
         final User user = usersRepository.findByPhoneEquals(phoneNumber).orElseThrow(UserNotExistsException::new);
-        final Account account = accountsRepository.findByUser(user).orElseThrow(AccountNotExistsException::new);
+        final Account account = accountsRepository.findByUserEquals(user).orElseThrow(AccountNotExistsException::new);
         accountResponse.setAccount(account);
         return accountResponse;
     }

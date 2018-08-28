@@ -29,7 +29,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountsRepository accountsRepository;
     private final TransactionsRepository transactionsRepository;
     private final TransactionStatusRepository transactionStatusRepository;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Override
     @Transactional(readOnly = true)
@@ -66,23 +66,23 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionsResponse getUserTransactions(Long userId) {
         final TransactionsResponse transactionsResponse = new TransactionsResponse();
         final User user = usersRepository.findById(userId).orElseThrow(UserNotExistsException::new);
-        final Account account = accountsRepository.findByUser(user).orElseThrow(AccountNotExistsException::new);
+        final Account account = accountsRepository.findByUserEquals(user).orElseThrow(AccountNotExistsException::new);
         transactionsResponse.setTransactions(transactionsRepository.findByAccountEquals(account));
-        getTransactions(transactionsResponse, user);
+        //getTransactions(transactionsResponse, user);
         return transactionsResponse;
     }
 
 
     @Override
     public void getTransactions(final TransactionsResponse transactionsResponse, final User user) {
-        messagingTemplate.convertAndSendToUser(
+        simpMessagingTemplate.convertAndSendToUser(
                 user.getUsername(), "/push/transactions", transactionsResponse);
         return;
     }
 
     @Override
     public void getTransactions(final TransactionResponse transactionsResponse, final User user) {
-        messagingTemplate.convertAndSendToUser(
+        simpMessagingTemplate.convertAndSendToUser(
                 user.getUsername(), "/push/transaction", transactionsResponse);
         return;
     }
