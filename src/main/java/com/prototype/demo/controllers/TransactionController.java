@@ -14,13 +14,18 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @GetMapping()
-    public ResponseEntity<Object> findTransactionByQr(@RequestParam(name = "search") String search) {
-        return new ResponseEntity<>(transactionService.findTransactionByQr(search), HttpStatus.OK);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Object> getTransactionHistoryForUser(@PathVariable(name = "userId") Long userId) {
+        return new ResponseEntity<>(transactionService.getUserTransactions(userId), HttpStatus.OK);
     }
 
     @PostMapping()
     public ResponseEntity<Object> createTransaction(@RequestBody @Valid TransactionRequest transactionRequest) {
         return new ResponseEntity<>(transactionService.createTransaction(transactionRequest), HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Object> findTransactionByQr(@RequestParam(name = "search") String search) {
+        return new ResponseEntity<>(transactionService.findTransactionByQr(search), HttpStatus.OK);
     }
 }

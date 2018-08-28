@@ -1,6 +1,9 @@
 package com.prototype.demo.services.impl;
 
+import com.prototype.demo.exeptions.UserNotExistsException;
 import com.prototype.demo.model.dao.User;
+import com.prototype.demo.model.requests.UserRequest;
+import com.prototype.demo.model.responses.UserResponse;
 import com.prototype.demo.repositories.UsersRepository;
 import com.prototype.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +41,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(final long id) {
-        final User user = usersRepository.findById(id).orElse(null);
+        final User user = usersRepository.findById(id)
+                .orElseThrow(UserNotExistsException::new);
         usersRepository.delete(user);
+    }
+
+    @Override
+    public UserResponse createUser(final UserRequest userRequest) {
+        final UserResponse userResponse = new UserResponse();
+        final User user = new User();
+        user.setPassword(userRequest.getPassword());
+        user.setPhone(userRequest.getPhone());
+        user.setUsername(userRequest.getName());
+        usersRepository.save(user);
+        userResponse.setUser(user);
+        return userResponse;
     }
 
     @Override

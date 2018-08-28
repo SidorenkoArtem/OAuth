@@ -1,6 +1,8 @@
 package com.prototype.demo.services;
 
 import com.prototype.demo.model.dao.User;
+import com.prototype.demo.model.requests.UserRequest;
+import com.prototype.demo.model.responses.UserResponse;
 
 import java.util.List;
 
