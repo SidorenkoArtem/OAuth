@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -18,7 +17,7 @@ public class AuthTokenFilter extends GenericFilterBean {
 
     private final UserDetailsService detailsService;
     private final TokenUtils tokenUtils = new TokenUtils();
-    private String xAuthTokenHeaderName = "x-auth-token";
+    private String AuthTokenHeaderName = "x-auth-token";
 
     public AuthTokenFilter(UserDetailsService userDetailsService) {
         this.detailsService = userDetailsService;
@@ -28,7 +27,7 @@ public class AuthTokenFilter extends GenericFilterBean {
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain filterChain) throws IOException, ServletException {
         try {
             HttpServletRequest httpServletRequest = (HttpServletRequest) arg0;
-            String authToken = httpServletRequest.getHeader(this.xAuthTokenHeaderName);
+            String authToken = httpServletRequest.getHeader(this.AuthTokenHeaderName);
 
             if (StringUtils.hasText(authToken)) {
                 String username = this.tokenUtils.getUserNameFromToken(authToken);
@@ -45,5 +44,4 @@ public class AuthTokenFilter extends GenericFilterBean {
             throw new RuntimeException(ex);
         }
     }
-
 }

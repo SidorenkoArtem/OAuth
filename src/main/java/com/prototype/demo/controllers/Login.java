@@ -1,13 +1,14 @@
 package com.prototype.demo.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class Login {
 
-    @RequestMapping(path = "login")
-    public String login() {
+    @GetMapping("/login")
+    public String login(Model model) {
         return "Login";
     }
 }
