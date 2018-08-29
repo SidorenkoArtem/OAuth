@@ -43,7 +43,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-		String[] restEndpointsToSecure = { "news"};
+		String[] restEndpointsToSecure = {"news"};
 		for (String endpoint : restEndpointsToSecure) {
 			http.authorizeRequests().antMatchers("/" + endpoint + "/**").hasRole(CustomUserDetailsService.ROLE_USER);
 		}
@@ -81,15 +81,15 @@ class CustomUserDetailsService implements UserDetailsService {
 		private String username;
 		private String password;
 		private boolean enabled = true;
-		private Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		private Set<GrantedAuthority> authorities = new HashSet<>();
 
 		public SimpleUserDetails(String username, String pw, String... extraRoles) {
 			this.username = username;
 			this.password = pw;
 
 			// setup roles
-			Set<String> roles = new HashSet<String>();
-			roles.addAll(Arrays.<String>asList(null == extraRoles ? new String[0] : extraRoles));
+			Set<String> roles = new HashSet<>();
+			roles.addAll(Arrays.asList(null == extraRoles ? new String[0] : extraRoles));
 
 			// export them as part of authorities
 			for (String r : roles) {
@@ -142,7 +142,7 @@ class CustomUserDetailsService implements UserDetailsService {
 		}
 	}
 
-	List<UserDetails> details = Arrays.<UserDetails>asList(new SimpleUserDetails("user", "user", ROLE_USER), new SimpleUserDetails("admin", "admin", ROLE_USER, ROLE_ADMIN));
+	List<UserDetails> details = Arrays.asList(new SimpleUserDetails("user", "user", ROLE_USER), new SimpleUserDetails("admin", "admin", ROLE_USER, ROLE_ADMIN));
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -157,7 +157,7 @@ class CustomUserDetailsService implements UserDetailsService {
 @RestController
 class NewsController {
 
-	Map<Long, NewsEntry> entries = new ConcurrentHashMap<Long, NewsEntry>();
+	Map<Long, NewsEntry> entries = new ConcurrentHashMap<>();
 
 	@RequestMapping("/news")
 	Collection<NewsEntry> entriess() {
