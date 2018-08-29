@@ -9,6 +9,6 @@ public interface TransactionService {
     TransactionResponse findTransactionByQr(final String qrCode);
     TransactionResponse createTransaction(final TransactionRequest transactionRequest);
     TransactionsResponse getUserTransactions(final Long userId);
-    void getTransactions(final TransactionsResponse transactionsResponse, final User user);
-    void getTransactions(final TransactionResponse transactionsResponse, final User user);
+//    void getTransactions(final TransactionsResponse transactionsResponse, final User user);
+//    void getTransactions(final TransactionResponse transactionsResponse, final User user);
 }

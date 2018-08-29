@@ -1,5 +1,6 @@
 package com.prototype.demo.services;
 
+import com.prototype.demo.exeptions.UserNotExistsException;
 import com.prototype.demo.model.dao.User;
 import com.prototype.demo.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UserDetailService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = usersRepository.findByUsername(username);
+        User user = usersRepository.findByUsername(username).orElseThrow(UserNotExistsException::new);
         if(user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }

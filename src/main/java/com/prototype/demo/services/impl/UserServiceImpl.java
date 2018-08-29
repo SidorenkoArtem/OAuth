@@ -23,11 +23,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository usersRepository;
 
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = usersRepository.findByUsername(userId);
-        if(user == null){
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
+    @Override
+    public UserDetails loadUserByUsername(String userId) {
+        final User user = usersRepository.findByUsername(userId).orElseThrow(UserNotExistsException::new);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
     }
 
