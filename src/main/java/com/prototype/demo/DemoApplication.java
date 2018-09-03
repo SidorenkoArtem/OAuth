@@ -70,12 +70,14 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 }
 
+/**
+ * Custom user detail service.
+ */
 class CustomUserDetailsService implements UserDetailsService {
 
 	public static final String ROLE_ADMIN = "ADMIN";
 	public static final String ROLE_USER = "USER";
 
-	@SuppressWarnings("serial")
 	static class SimpleUserDetails implements UserDetails {
 
 		private String username;
@@ -154,6 +156,9 @@ class CustomUserDetailsService implements UserDetailsService {
 	}
 }
 
+/**
+ * Simple test
+ */
 @RestController
 class NewsController {
 

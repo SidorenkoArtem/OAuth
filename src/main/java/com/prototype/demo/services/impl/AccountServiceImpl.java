@@ -16,14 +16,25 @@ import com.prototype.demo.services.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service implementation for working with account data model.
+ */
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
+    /**
+     * Inject: AccountRepository, UsersRepository, VendorRepository through constructor.
+     */
     private final AccountsRepository accountsRepository;
     private final UsersRepository usersRepository;
     private final VendorsRepository vendorsRepository;
 
+    /**
+     * Method return Account response by phone number.
+     * @param phoneNumber
+     * @return
+     */
     @Override
     public AccountResponse getAccountByPhoneNumber(final String phoneNumber) {
         final AccountResponse accountResponse = new AccountResponse();
@@ -33,6 +44,11 @@ public class AccountServiceImpl implements AccountService {
         return accountResponse;
     }
 
+    /**
+     * Method create account.
+     * @param accountRequest
+     * @return
+     */
     @Override
     public AccountResponse createAccount(final AccountRequest accountRequest) {
         final AccountResponse accountResponse = new AccountResponse();

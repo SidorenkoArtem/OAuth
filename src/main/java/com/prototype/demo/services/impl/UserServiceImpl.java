@@ -17,18 +17,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Service implementation for working with user service data model.
+ */
 @Service()
 public class UserServiceImpl implements UserService {
 
+    /**
+     * Inject: UsersRepository
+     */
     @Autowired
     private UsersRepository usersRepository;
 
+    /**
+     * Method return user details by username
+     * @param userId
+     * @return
+     */
     @Override
     public UserDetails loadUserByUsername(String userId) {
         final User user = usersRepository.findByUsername(userId).orElseThrow(UserNotExistsException::new);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
     }
 
+    /**
+     * Method return list granted authority
+     * @return
+     */
     private List<SimpleGrantedAuthority> getAuthority() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
@@ -39,6 +54,9 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    /**
+     * Delete user by user identifier.
+     */
     @Override
     public void delete(final long id) {
         final User user = usersRepository.findById(id)
@@ -46,6 +64,11 @@ public class UserServiceImpl implements UserService {
         usersRepository.delete(user);
     }
 
+    /**
+     * Method return user response after creating record.
+     * @param userRequest
+     * @return
+     */
     @Override
     public UserResponse createUser(final UserRequest userRequest) {
         final UserResponse userResponse = new UserResponse();
@@ -58,6 +81,11 @@ public class UserServiceImpl implements UserService {
         return userResponse;
     }
 
+    /**
+     * Method save entity user in database.
+     * @param user
+     * @return
+     */
     @Override
     public User save(User user) {
         return usersRepository.save(user);

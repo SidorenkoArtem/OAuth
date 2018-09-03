@@ -12,11 +12,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class for working UserDetails object.
+ */
 public class UserDetailService implements UserDetailsService{
 
+    /**
+     * Inject: UsersRepository.
+     */
     @Autowired
     private UsersRepository usersRepository;
 
+    /**
+     *
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = usersRepository.findByUsername(username).orElseThrow(UserNotExistsException::new);

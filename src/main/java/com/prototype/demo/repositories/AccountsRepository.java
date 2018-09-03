@@ -7,7 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * CRUD repository for working with account table in database.
+ */
 @Repository
 public interface AccountsRepository extends CrudRepository<Account, Long> {
+    /**
+     * Method return Account by user.
+     * @param user
+     * @return
+     */
     Optional<Account> findByUserEquals(final User user);
 }

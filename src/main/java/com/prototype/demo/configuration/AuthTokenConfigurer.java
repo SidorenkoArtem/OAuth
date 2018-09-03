@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * OAuth token configuration class. Override method configure for custom realisation.
+ */
 public class AuthTokenConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private UserDetailsService detailsService;
@@ -14,6 +17,11 @@ public class AuthTokenConfigurer extends SecurityConfigurerAdapter<DefaultSecuri
         this.detailsService = detailsService;
     }
 
+    /**
+     * Override method configure for custom realisation.
+     * @param http
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         AuthTokenFilter customFilter = new AuthTokenFilter(detailsService);

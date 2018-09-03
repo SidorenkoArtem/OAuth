@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import com.prototype.demo.configuration.TokenUtils;
 
+import com.prototype.demo.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,13 +23,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserAuthTokenController {
 
+    /**
+     * Pull up token utils.
+     */
     private final TokenUtils tokenUtils = new TokenUtils();
+    /**
+     * Inject: AuthenticationManager, UserService, UserDetailsService through constructor.
+     */
     private final AuthenticationManager authenticationManager;
-//    private final UserService userService;
+    private final UserService userService;
     private final UserDetailsService userDetailsService;
 
 
-
+    /**
+     * Method for authentication user by username and password and grant rights.
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/authenticate", method = { RequestMethod.POST })
     public UserTransfer authorize(@RequestParam String username, @RequestParam String password) {
 
@@ -40,9 +52,12 @@ public class UserAuthTokenController {
         for (GrantedAuthority authority : details.getAuthorities())
             roles.put(authority.toString(), Boolean.TRUE);
 
-        return null;//new UserTransfer(details.getUsername(), roles, tokenUtils.createToken(details));
+        return new UserTransfer(details.getUsername(), roles, tokenUtils.createToken(details));
     }
 
+    /**
+     * Class that transfer user with min information.
+     */
     public static class UserTransfer {
 
         private final String name;

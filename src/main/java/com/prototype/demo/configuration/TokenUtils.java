@@ -6,10 +6,18 @@ import org.springframework.security.crypto.codec.Hex;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Util for creating, validation tokens.
+ */
 public class TokenUtils {
 
     public static final String MAGIC_KEY = "obfuscate";
 
+    /**
+     * Creation token.
+     * @param userDetails
+     * @return
+     */
     public String createToken(UserDetails userDetails) {
         long expires = System.currentTimeMillis() + 1000L * 60 * 60;
         return userDetails.getUsername() + ":" + expires + ":" + computeSignature(userDetails, expires);
@@ -39,6 +47,12 @@ public class TokenUtils {
         return parts[0];
     }
 
+    /**
+     * Validation token.
+     * @param authToken
+     * @param userDetails
+     * @return
+     */
     public boolean validateToken(String authToken, UserDetails userDetails) {
         String[] parts = authToken.split(":");
         long expires = Long.parseLong(parts[1]);

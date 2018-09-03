@@ -21,16 +21,27 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service implementation for working with transaction data model.
+ */
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
+    /**
+     * Inject: UsersRepository, AccountsRepository, TransactionsRepository through constructor.
+     */
     private final UsersRepository usersRepository;
     private final AccountsRepository accountsRepository;
     private final TransactionsRepository transactionsRepository;
     private final TransactionStatusRepository transactionStatusRepository;
     //private final SimpMessagingTemplate simpMessagingTemplate;
 
+    /**
+     * Method return transaction response by QR code.
+     * @param qrCode
+     * @return
+     */
     @Override
     @Transactional(readOnly = true)
     public TransactionResponse findTransactionByQr(final String qrCode) {
@@ -39,6 +50,11 @@ public class TransactionServiceImpl implements TransactionService {
         return transaction;
     }
 
+    /**
+     * Method return transaction response after create transaction.
+     * @param transactionRequest
+     * @return
+     */
     @Override
     @Transactional
     public TransactionResponse createTransaction(TransactionRequest transactionRequest) {
@@ -62,6 +78,11 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionResponse;
     }
 
+    /**
+     * Method return Transactions response by user id.
+     * @param userId
+     * @return
+     */
     @Override
     public TransactionsResponse getUserTransactions(Long userId) {
         final TransactionsResponse transactionsResponse = new TransactionsResponse();

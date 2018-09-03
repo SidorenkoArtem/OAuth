@@ -3,6 +3,9 @@ package com.prototype.demo.exeptions;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enum for with error code and message for exception
+ */
 @RequiredArgsConstructor
 @Getter
 public enum  ErrorCode {

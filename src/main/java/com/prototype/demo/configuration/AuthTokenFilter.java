@@ -13,16 +13,34 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Class where override filter chain of GenericFilterBean class.
+ */
 public class AuthTokenFilter extends GenericFilterBean {
 
+    /**
+     * Inject: UserDetailsService, TokenUtils
+     */
     private final UserDetailsService detailsService;
     private final TokenUtils tokenUtils = new TokenUtils();
     private String AuthTokenHeaderName = "x-auth-token";
 
+    /**
+     * Initialisation details service
+     * @param userDetailsService
+     */
     public AuthTokenFilter(UserDetailsService userDetailsService) {
         this.detailsService = userDetailsService;
     }
 
+    /**
+     * Override doFilter of GenericFilterBean. Custom filter token validation and set token to security context holder.
+     * @param arg0
+     * @param arg1
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain filterChain) throws IOException, ServletException {
         try {

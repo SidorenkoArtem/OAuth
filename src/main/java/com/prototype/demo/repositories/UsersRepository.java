@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
+/**
+ * CRUD repository for working with users table in database.
+ */
 @Repository
 public interface UsersRepository extends CrudRepository<User, Long> {
 
